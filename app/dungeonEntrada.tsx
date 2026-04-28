@@ -25,7 +25,6 @@ export default function DungeonEntrada() {
       <StatusBar barStyle="light-content" />
 
       <View style={[estilos.container, { paddingTop: margens.top + 10, paddingBottom: margens.bottom + 20 }]}>
-        {/* Botão voltar */}
         <TouchableOpacity style={estilos.btnVoltar} onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={22} color="#D4AF37" />
           <Text style={estilos.btnVoltarTexto}>Voltar</Text>
@@ -35,9 +34,7 @@ export default function DungeonEntrada() {
           <Text style={estilos.titulo}>DUNGEON FINDER</Text>
           <Text style={estilos.subtitulo}>Sua aventura começa aqui</Text>
 
-          <View style={estilos.porta}>
-            <Ionicons name="shield-outline" size={80} color="#D4AF37" style={estilos.icone} />
-          </View>
+         
 
           <View style={estilos.botoes}>
             <TouchableOpacity
@@ -48,13 +45,7 @@ export default function DungeonEntrada() {
               <Text style={estilos.botaoPrimarioTexto}>Entrar na Dungeon</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
-              style={estilos.botaoSecundario}
-              onPress={() => router.push("/cadastro")}
-              activeOpacity={0.8}
-            >
-              <Text style={estilos.botaoSecundarioTexto}>Criar nova conta</Text>
-            </TouchableOpacity>
+          
 
             <View style={estilos.cadastroLinha}>
               <Text style={estilos.cadastroTexto}>Não tem conta? </Text>
@@ -125,10 +116,11 @@ const estilos = StyleSheet.create({
     opacity: 0.9,
   },
   botoes: {
-    width: "100%",
-    gap: 12,
-    alignItems: "center",
-  },
+  width: "100%",
+  gap: 12,
+  alignItems: "center",
+  marginTop: 20,   
+},
   botaoPrimario: {
     width: "100%",
     backgroundColor: "#D4AF37",

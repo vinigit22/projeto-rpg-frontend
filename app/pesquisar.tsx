@@ -38,12 +38,10 @@ export default function Pesquisar() {
       <StatusBar barStyle="light-content" />
 
       <View style={[estilos.cabecalho, { paddingTop: margens.top + 12 }]}>
-        {/* Botão voltar */}
         <TouchableOpacity onPress={() => roteador.back()} style={estilos.botaoVoltar}>
           <Ionicons name="arrow-back-outline" size={24} color="#fff" />
         </TouchableOpacity>
 
-        {/* Campo de busca */}
         <View style={estilos.campoBusca}>
           <Ionicons name="search-outline" size={18} color="#aaa" />
           <TextInput
@@ -64,7 +62,6 @@ export default function Pesquisar() {
         </View>
       </View>
 
-      {/* Aqui futuramente entram os resultados */}
       <View style={estilos.areaResultados}>
         {busca.length === 0 && (
           <Text style={estilos.textoVazio}>Digite para pesquisar…</Text>

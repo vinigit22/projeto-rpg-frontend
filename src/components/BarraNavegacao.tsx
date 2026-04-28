@@ -6,11 +6,11 @@ import { useRouter, usePathname } from "expo-router";
 import { useAuth } from "@/context/AuthContext";
 
 const ITENS_NAVEGACAO = [
-  { icone: "home-outline",          rotulo: "Home",         rota: "/"             },
-  { icone: "people-outline",        rotulo: "Comunidade",   rota: "/comunidade"   },
-  { icone: "search-outline",        rotulo: "Pesquisar",    rota: "/pesquisar"    },
-  { icone: "notifications-outline", rotulo: "Notificações", rota: "/notificacao"  },
-  { icone: "person-outline",        rotulo: "Perfil",       rota: "/perfil"       },
+  { icone: "home-outline",          rotulo: "Home",         rota: "/"           },
+  { icone: "people-outline",        rotulo: "Comunidade",   rota: "/comunidade" },
+  { icone: "search-outline",        rotulo: "Pesquisar",    rota: "/pesquisar"  },
+  { icone: "notifications-outline", rotulo: "Notificações", rota: "/notificacao"},
+  { icone: "person-outline",        rotulo: "Perfil",       rota: "/perfil"     },
 ] as const;
 
 export default function BarraNavegacao() {
@@ -36,8 +36,10 @@ export default function BarraNavegacao() {
   return (
     <View style={[estilos.barra, { paddingBottom: margens.bottom + 6 }]}>
       {ITENS_NAVEGACAO.map((item) => {
-        const ativo = caminhoAtual === item.rota
-          || (item.rota === "/" && caminhoAtual === "/home");
+        const ativo =
+          caminhoAtual === item.rota ||
+          (item.rota === "/" && caminhoAtual === "/home");
+
         return (
           <TouchableOpacity
             key={item.rotulo}
@@ -70,8 +72,8 @@ const estilos = StyleSheet.create({
     paddingHorizontal: 7,
     gap: 12,
   },
-  itemNav: { flex: 1, alignItems: "center", gap: 3 },
-  rotulo: { fontSize: 10, color: "#aaa" },
+  itemNav:     { flex: 1, alignItems: "center", gap: 3 },
+  rotulo:      { fontSize: 10, color: "#aaa" },
   rotuloAtivo: { color: "#D4AF37", fontWeight: "600" },
-  indicador: { width: 4, height: 4, borderRadius: 2, backgroundColor: "#D4AF37", marginTop: 2 },
+  indicador:   { width: 4, height: 4, borderRadius: 2, backgroundColor: "#D4AF37", marginTop: 2 },
 });

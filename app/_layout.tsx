@@ -17,6 +17,7 @@ export default function RootLayout() {
           <Stack.Screen name="pesquisar"      />
           <Stack.Screen name="notificacao"    />
           <Stack.Screen name="perfil"         />
+          <Stack.Screen name="config"         />
           <Stack.Screen name="guilda"         />
         </Stack>
       </AuthProvider>

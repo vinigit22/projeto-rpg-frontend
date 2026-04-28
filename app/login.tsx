@@ -57,7 +57,7 @@ export default function Login() {
         behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
         <View style={[estilos.container, { paddingTop: margens.top + 10, paddingBottom: margens.bottom + 20 }]}>
-          {/* Voltar */}
+         
           <TouchableOpacity style={estilos.btnVoltar} onPress={() => router.back()}>
             <Ionicons name="arrow-back" size={22} color="#D4AF37" />
             <Text style={estilos.btnVoltarTexto}>Voltar</Text>
@@ -66,7 +66,7 @@ export default function Login() {
           <View style={estilos.corpo}>
             <Text style={estilos.titulo}>Login</Text>
 
-            {/* Usuário ou E-mail */}
+          
             <View style={estilos.campoWrapper}>
               <Text style={estilos.label}>Usuário ou Email</Text>
               <View style={estilos.inputContainer}>
@@ -82,7 +82,7 @@ export default function Login() {
               </View>
             </View>
 
-            {/* Senha */}
+          
             <View style={estilos.campoWrapper}>
               <Text style={estilos.label}>Senha</Text>
               <View style={estilos.inputContainer}>
@@ -100,7 +100,7 @@ export default function Login() {
               </View>
             </View>
 
-            {/* Esqueceu a senha */}
+        
             <View style={estilos.esqueceuLinha}>
               <Text style={estilos.esqueceuTexto}>Esqueceu a senha? </Text>
               <TouchableOpacity>
@@ -108,7 +108,7 @@ export default function Login() {
               </TouchableOpacity>
             </View>
 
-            {/* Botão Entrar */}
+    
             <TouchableOpacity
               style={[estilos.botao, carregando && { opacity: 0.7 }]}
               onPress={handleEntrar}
@@ -121,7 +121,7 @@ export default function Login() {
               }
             </TouchableOpacity>
 
-            {/* Criar conta */}
+          
             <View style={estilos.cadastroLinha}>
               <Text style={estilos.cadastroTexto}>Não tem conta? </Text>
               <TouchableOpacity onPress={() => router.push("/cadastro")}>

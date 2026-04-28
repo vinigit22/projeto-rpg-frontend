@@ -19,14 +19,25 @@ const EVENTOS = [
     id: "1",
     titulo: "Fase do estilo",
     descricao:
-      "Throw e pôr seus ambrosia e participam de uma competição de moda de proporções surrealmante fazem com um NPC de transmogrificação em qualquer cidade principal para participar da Prova de Estilo.",
-    duracao: "até 06/08/2026",
+      "Tirem o pó das suas armaduras e participem de uma competição de moda de proporções surreais! Falem com um NPC de transmogrificação em qualquer cidade principal para participar da Prova de Estilo!",
+    duracao: "até 08/08/2026",
     imagem: require("../assets/elder.png"),
   },
 ];
 
 const RAIDS = [
-  { id: "1", nome: "Den of Nalorakh", nivel: "Nível mínimo: 60 · 5 vagas, buscando", membros: 4 },
+  {
+    id: "1",
+    nome: "Den of Nalorakh",
+    nivel: "Nível mínimo: 80, 5 vagas, buscando: 3",
+    membros: [
+      { id: "1", rotulo: "DRUIDA",        imagem: require("../assets/wow.png")          },
+      { id: "2", rotulo: "DEMON HUNTER",  imagem: require("../assets/dagger.png")       },
+      { id: "3", rotulo: "MONGE",         imagem: require("../assets/elder.png")        },
+      { id: "4", rotulo: "ILLIDAN",       imagem: require("../assets/ALBIONONLINE.png") },
+      { id: "5", rotulo: "MORGANA",       imagem: require("../assets/tormenta.png")     },
+    ],
+  },
 ];
 
 export default function Home() {
@@ -44,47 +55,64 @@ export default function Home() {
 
       <ScrollView
         style={{ flex: 1 }}
-        contentContainerStyle={[estilos.rolagem, { paddingTop: margens.top + 12 }]}
+        contentContainerStyle={{ paddingBottom: 90 }}
         showsVerticalScrollIndicator={false}
       >
-        {/* Saudação */}
-        <Text style={estilos.saudacao}>Olá, {user?.usuario ?? "Aventureiro"} ⚔️</Text>
+       
+        <Image
+          source={require("../assets/wow.png")}
+          style={[estilos.bannerTopo, { marginTop: margens.top }]}
+          resizeMode="cover"
+        />
 
-        {/* EVENTOS */}
-        <Text style={estilos.secaoTitulo}>EVENTOS</Text>
-        {EVENTOS.map((evento) => (
-          <View key={evento.id} style={estilos.eventoCard}>
-            <Image source={evento.imagem} style={estilos.eventoImagem} resizeMode="cover" />
-            <View style={estilos.eventoInfo}>
+       
+        <View style={estilos.corpo}>
+          <Text style={estilos.secaoTitulo}>EVENTOS</Text>
+
+          {EVENTOS.map((evento) => (
+            <View key={evento.id}>
               <Text style={estilos.eventoNome}>{evento.titulo}</Text>
-              <Text style={estilos.eventoDesc} numberOfLines={4}>{evento.descricao}</Text>
+              <View style={estilos.eventoCard}>
+                <Image source={evento.imagem} style={estilos.eventoImagem} resizeMode="cover" />
+                <Text style={estilos.eventoDesc}>{evento.descricao}</Text>
+              </View>
               <Text style={estilos.eventoDuracao}>Duração: {evento.duracao}</Text>
+              <TouchableOpacity style={estilos.btnSeta}>
+                <Ionicons name="chevron-down" size={20} color="#fff" />
+              </TouchableOpacity>
             </View>
-          </View>
-        ))}
+          ))}
 
-        {/* RAIDS */}
-        <Text style={[estilos.secaoTitulo, { marginTop: 24 }]}>RAIDS</Text>
-        {RAIDS.map((raid) => (
-          <View key={raid.id} style={estilos.raidCard}>
-            <View style={estilos.raidInfo}>
+          {/* RAIDS */}
+          <Text style={[estilos.secaoTitulo, { marginTop: 28 }]}>RAIDS</Text>
+
+          {RAIDS.map((raid) => (
+            <View key={raid.id} style={estilos.raidCard}>
               <Text style={estilos.raidNome}>{raid.nome}</Text>
               <Text style={estilos.raidNivel}>{raid.nivel}</Text>
+
               <View style={estilos.raidMembros}>
-                {Array.from({ length: raid.membros }).map((_, i) => (
-                  <View key={i} style={estilos.avatarCirculo}>
-                    <Ionicons name="person" size={14} color="#D4AF37" />
+                {raid.membros.map((m) => (
+                  <View key={m.id} style={estilos.membroCol}>
+                    <Image source={m.imagem} style={estilos.membroAvatar} resizeMode="cover" />
+                    <Text style={estilos.membroRotulo} numberOfLines={1}>{m.rotulo}</Text>
                   </View>
                 ))}
-                <TouchableOpacity style={estilos.raidBtnAdicionar}>
-                  <Ionicons name="add" size={20} color="#D4AF37" />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        ))}
 
-        <View style={{ height: 20 }} />
+                {/* Botão + para criar/entrar na raid */}
+                <View style={estilos.membroCol}>
+                  <TouchableOpacity style={estilos.btnMais}>
+                    <Ionicons name="add" size={26} color="#D4AF37" />
+                  </TouchableOpacity>
+                </View>
+              </View>
+
+              <TouchableOpacity style={estilos.btnSeta}>
+                <Ionicons name="chevron-down" size={20} color="#fff" />
+              </TouchableOpacity>
+            </View>
+          ))}
+        </View>
       </ScrollView>
 
       <BarraNavegacao />
@@ -94,65 +122,107 @@ export default function Home() {
 
 const estilos = StyleSheet.create({
   fundo:   { flex: 1 },
-  overlay: { ...StyleSheet.absoluteFillObject, backgroundColor: "rgba(0,0,0,0.55)" },
-  rolagem: { paddingHorizontal: 16, paddingBottom: 10 },
-  saudacao: {
-    color: "#D4AF37",
-    fontSize: 16,
-    fontWeight: "700",
-    marginBottom: 16,
-    letterSpacing: 1,
+  overlay: { ...StyleSheet.absoluteFillObject, backgroundColor: "rgba(0,0,0,0.45)" },
+
+  bannerTopo: {
+    width: "100%",
+    height: 120,
   },
+
+  corpo: {
+    paddingHorizontal: 16,
+    paddingTop: 16,
+  },
+
   secaoTitulo: {
     color: "#fff",
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "900",
     letterSpacing: 2,
-    marginBottom: 12,
+    marginBottom: 10,
+  },
+
+  eventoNome: {
+    color: "#fff",
+    fontSize: 15,
+    fontWeight: "700",
+    marginBottom: 8,
   },
   eventoCard: {
     flexDirection: "row",
-    backgroundColor: "rgba(0,0,0,0.5)",
-    borderRadius: 10,
-    overflow: "hidden",
-    marginBottom: 12,
-    borderWidth: 1,
-    borderColor: "rgba(212,175,55,0.2)",
+    gap: 10,
+    marginBottom: 6,
   },
-  eventoImagem: { width: 90, height: 110 },
-  eventoInfo:   { flex: 1, padding: 10, gap: 4 },
-  eventoNome:   { color: "#fff", fontWeight: "700", fontSize: 14 },
-  eventoDesc:   { color: "#ccc", fontSize: 11, lineHeight: 16 },
-  eventoDuracao:{ color: "#D4AF37", fontSize: 11, marginTop: 4 },
+  eventoImagem: {
+    width: 70,
+    height: 70,
+    borderRadius: 8,
+  },
+  eventoDesc: {
+    flex: 1,
+    color: "#ddd",
+    fontSize: 11,
+    lineHeight: 16,
+  },
+  eventoDuracao: {
+    color: "#fff",
+    fontSize: 12,
+    marginTop: 6,
+    marginBottom: 4,
+  },
+
+  btnSeta: {
+    alignSelf: "center",
+    marginTop: 6,
+    marginBottom: 4,
+  },
+
+  // Raid
   raidCard: {
-    backgroundColor: "rgba(0,0,0,0.5)",
-    borderRadius: 10,
-    padding: 14,
-    marginBottom: 10,
-    borderWidth: 1,
-    borderColor: "rgba(212,175,55,0.2)",
+    marginBottom: 16,
   },
-  raidInfo:  { gap: 6 },
-  raidNome:  { color: "#fff", fontWeight: "700", fontSize: 15 },
-  raidNivel: { color: "#aaa", fontSize: 12 },
-  raidMembros: { flexDirection: "row", alignItems: "center", gap: 6, marginTop: 4 },
-  avatarCirculo: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: "rgba(212,175,55,0.15)",
-    borderWidth: 1,
-    borderColor: "rgba(212,175,55,0.4)",
-    justifyContent: "center",
+  raidNome: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "800",
+    marginBottom: 2,
+  },
+  raidNivel: {
+    color: "#ccc",
+    fontSize: 11,
+    marginBottom: 12,
+  },
+  raidMembros: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 10,
+    flexWrap: "wrap",
+  },
+  membroCol: {
     alignItems: "center",
+    gap: 4,
+    width: 48,
   },
-  raidBtnAdicionar: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    borderWidth: 1.5,
+  membroAvatar: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    borderWidth: 2,
+    borderColor: "rgba(255,255,255,0.3)",
+  },
+  membroRotulo: {
+    color: "#ccc",
+    fontSize: 8,
+    textAlign: "center",
+  },
+  btnMais: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    borderWidth: 2,
     borderColor: "#D4AF37",
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "rgba(212,175,55,0.05)",
   },
 });

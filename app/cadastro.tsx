@@ -77,7 +77,6 @@ export default function Cadastro() {
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
         >
-          {/* Voltar */}
           <TouchableOpacity style={estilos.btnVoltar} onPress={() => router.back()}>
             <Ionicons name="arrow-back" size={22} color="#D4AF37" />
             <Text style={estilos.btnVoltarTexto}>Voltar</Text>
@@ -85,7 +84,6 @@ export default function Cadastro() {
 
           <Text style={estilos.titulo}>Cadastro</Text>
 
-          {/* Usuário */}
           <View style={estilos.campoWrapper}>
             <Text style={estilos.label}>Usuário</Text>
             <TextInput
@@ -98,7 +96,7 @@ export default function Cadastro() {
             />
           </View>
 
-          {/* Email */}
+          
           <View style={estilos.campoWrapper}>
             <Text style={estilos.label}>Email</Text>
             <TextInput
@@ -112,7 +110,6 @@ export default function Cadastro() {
             />
           </View>
 
-          {/* Senha */}
           <View style={estilos.campoWrapper}>
             <Text style={estilos.label}>Senha</Text>
             <View style={estilos.inputRow}>
@@ -130,7 +127,6 @@ export default function Cadastro() {
             </View>
           </View>
 
-          {/* Confirmar Senha */}
           <View style={estilos.campoWrapper}>
             <Text style={estilos.label}>Confirmar senha</Text>
             <TextInput
@@ -143,7 +139,6 @@ export default function Cadastro() {
             />
           </View>
 
-          {/* Botão Cadastrar */}
           <TouchableOpacity
             style={[estilos.botao, carregando && { opacity: 0.7 }]}
             onPress={handleCadastrar}
@@ -156,7 +151,6 @@ export default function Cadastro() {
             }
           </TouchableOpacity>
 
-          {/* Já tem conta */}
           <View style={estilos.loginLinha}>
             <Text style={estilos.loginTexto}>Já tem conta? </Text>
             <TouchableOpacity onPress={() => router.push("/login")}>
