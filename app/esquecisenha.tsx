@@ -15,29 +15,38 @@ import {
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useAuth } from "@/context/AuthContext";
 
-export default function Login() {
+export default function RedefinirSenha() {
   const router = useRouter();
   const margens = useSafeAreaInsets();
-  const { signIn } = useAuth();
 
-  const [emailOrUser, setEmailOrUser] = useState("");
-  const [senha, setSenha]             = useState("");
+  const [usuario, setUsuario] = useState("");
+  const [novaSenha, setNovaSenha] = useState("");
+  const [confirmarSenha, setConfirmarSenha] = useState("");
   const [mostrarSenha, setMostrarSenha] = useState(false);
-  const [carregando, setCarregando]   = useState(false);
+  const [carregando, setCarregando] = useState(false);
 
-  async function handleEntrar() {
-    if (!emailOrUser.trim() || !senha.trim()) {
-      Alert.alert("Atenção", "Preencha usuário/e-mail e senha.");
+  async function handleRedefinir() {
+    // Validações básicas
+    if (!usuario.trim() || !novaSenha.trim() || !confirmarSenha.trim()) {
+      Alert.alert("Atenção", "Preencha todos os campos.");
       return;
     }
+
+    if (novaSenha !== confirmarSenha) {
+      Alert.alert("Erro", "As senhas não coincidem.");
+      return;
+    }
+
     try {
       setCarregando(true);
-      await signIn(emailOrUser.trim(), senha);
-      router.replace("/home");
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      Alert.alert("Sucesso", "Sua senha foi alterada com sucesso!", [
+        { text: "OK", onPress: () => router.replace("/login") }
+      ]);
     } catch (e) {
-      Alert.alert("Erro", "Não foi possível fazer login. Verifique suas credenciais.");
+      Alert.alert("Erro", "Não foi possível redefinir a senha.");
     } finally {
       setCarregando(false);
     }
@@ -45,7 +54,7 @@ export default function Login() {
 
   return (
     <ImageBackground
-      source={require("../assets/fundo1.png")}
+      source={require("../assets/fundo1.png")} 
       style={estilos.fundo}
       resizeMode="cover"
     >
@@ -57,41 +66,54 @@ export default function Login() {
         behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
         <View style={[estilos.container, { paddingTop: margens.top + 10, paddingBottom: margens.bottom + 20 }]}>
-         
+          
           <TouchableOpacity style={estilos.btnVoltar} onPress={() => router.back()}>
             <Ionicons name="arrow-back" size={22} color="#D4AF37" />
             <Text style={estilos.btnVoltarTexto}>Voltar</Text>
           </TouchableOpacity>
 
           <View style={estilos.corpo}>
-            <Text style={estilos.titulo}>Login</Text>
+            <Text style={estilos.titulo}>Redefinir Senha</Text>
 
-          
             <View style={estilos.campoWrapper}>
-              <Text style={estilos.label}>Usuário ou Email</Text>
+              <Text style={estilos.label}>Confirmar Usuário ou Email</Text>
               <View style={estilos.inputContainer}>
                 <TextInput
                   style={estilos.input}
-                  placeholder="Digite seu usuário ou e-mail"
+                  placeholder="Seu usuário cadastrado"
                   placeholderTextColor="#888"
-                  value={emailOrUser}
-                  onChangeText={setEmailOrUser}
+                  value={usuario}
+                  onChangeText={setUsuario}
                   autoCapitalize="none"
-                  keyboardType="email-address"
                 />
               </View>
             </View>
 
-          
+    
             <View style={estilos.campoWrapper}>
-              <Text style={estilos.label}>Senha</Text>
+              <Text style={estilos.label}>Nova Senha</Text>
               <View style={estilos.inputContainer}>
                 <TextInput
                   style={[estilos.input, { flex: 1 }]}
-                  placeholder="Digite sua senha"
+                  placeholder="Digite a nova senha"
                   placeholderTextColor="#888"
-                  value={senha}
-                  onChangeText={setSenha}
+                  value={novaSenha}
+                  onChangeText={setNovaSenha}
+                  secureTextEntry={!mostrarSenha}
+                />
+              </View>
+            </View>
+
+            {/* Confirmar Senha */}
+            <View style={estilos.campoWrapper}>
+              <Text style={estilos.label}>Confirmar Nova Senha</Text>
+              <View style={estilos.inputContainer}>
+                <TextInput
+                  style={[estilos.input, { flex: 1 }]}
+                  placeholder="Repita a nova senha"
+                  placeholderTextColor="#888"
+                  value={confirmarSenha}
+                  onChangeText={setConfirmarSenha}
                   secureTextEntry={!mostrarSenha}
                 />
                 <TouchableOpacity onPress={() => setMostrarSenha(!mostrarSenha)} style={estilos.olho}>
@@ -100,33 +122,18 @@ export default function Login() {
               </View>
             </View>
 
-        <View style={estilos.esqueceuLinha}>
-  <Text style={estilos.esqueceuTexto}>Esqueceu a senha? </Text>
-  <TouchableOpacity onPress={() => router.push("/esquecisenha")}>
-    <Text style={estilos.esqueceuLink}>Clique aqui</Text>
-  </TouchableOpacity>
-</View>
-
-    
             <TouchableOpacity
               style={[estilos.botao, carregando && { opacity: 0.7 }]}
-              onPress={handleEntrar}
+              onPress={handleRedefinir}
               disabled={carregando}
               activeOpacity={0.8}
             >
               {carregando
                 ? <ActivityIndicator color="#1a1008" />
-                : <Text style={estilos.botaoTexto}>Entrar</Text>
+                : <Text style={estilos.botaoTexto}>Alterar Senha</Text>
               }
             </TouchableOpacity>
 
-          
-            <View style={estilos.cadastroLinha}>
-              <Text style={estilos.cadastroTexto}>Não tem conta? </Text>
-              <TouchableOpacity onPress={() => router.push("/cadastro")}>
-                <Text style={estilos.cadastroLink}>Criar Conta</Text>
-              </TouchableOpacity>
-            </View>
           </View>
         </View>
       </KeyboardAvoidingView>
@@ -157,10 +164,10 @@ const estilos = StyleSheet.create({
     gap: 16,
   },
   titulo: {
-    fontSize: 30,
+    fontSize: 28,
     fontWeight: "900",
     color: "#E8D5A3",
-    letterSpacing: 2,
+    letterSpacing: 1.5,
     marginBottom: 8,
     textShadowColor: "rgba(0,0,0,0.8)",
     textShadowOffset: { width: 1, height: 2 },
@@ -187,19 +194,12 @@ const estilos = StyleSheet.create({
     color: "#1a1008",
   },
   olho: { paddingLeft: 8 },
-  esqueceuLinha: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: -6,
-  },
-  esqueceuTexto: { color: "#ccc", fontSize: 12 },
-  esqueceuLink: { color: "#D4AF37", fontSize: 12, fontWeight: "700" },
   botao: {
     backgroundColor: "#D4AF37",
     paddingVertical: 15,
     borderRadius: 8,
     alignItems: "center",
-    marginTop: 4,
+    marginTop: 10,
   },
   botaoTexto: {
     color: "#1a1008",
@@ -207,11 +207,4 @@ const estilos = StyleSheet.create({
     fontWeight: "700",
     letterSpacing: 1,
   },
-  cadastroLinha: {
-    flexDirection: "row",
-    justifyContent: "center",
-    marginTop: 4,
-  },
-  cadastroTexto: { color: "#999", fontSize: 13 },
-  cadastroLink: { color: "#D4AF37", fontSize: 13, fontWeight: "700" },
 });

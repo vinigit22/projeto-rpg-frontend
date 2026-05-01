@@ -38,7 +38,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   async function signIn(emailOrUser: string, _senha: string) {
-    // TODO: substituir pela chamada real à sua API
     const mockUser: User = {
       id: "1",
       usuario: emailOrUser.includes("@") ? emailOrUser.split("@")[0] : emailOrUser,
@@ -49,7 +48,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   async function signUp(usuario: string, email: string, _senha: string) {
-    // TODO: substituir pela chamada real à sua API
     const mockUser: User = { id: Date.now().toString(), usuario, email };
     await AsyncStorage.setItem("@DungeonFinder:user", JSON.stringify(mockUser));
     setUser(mockUser);
